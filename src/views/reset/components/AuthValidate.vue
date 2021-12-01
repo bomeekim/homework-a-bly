@@ -55,7 +55,7 @@ export interface RuleFunction {
 }
 
 @Component
-export default class AuthRequest extends Vue {
+export default class AuthValidate extends Vue {
   private authCode = '';
 
   private loading = false;
@@ -94,12 +94,17 @@ export default class AuthRequest extends Vue {
       if (status === 200 && confirmToken) {
         this.setConfirmToken(confirmToken);
 
-        // TODO 비밀번호 변경 페이지 이동
+        // 비밀번호 변경 페이지 이동
+        await this.$router.push('/reset/password');
       }
     } catch (e) {
       console.error(e);
       const { message } = e;
-      this.$swal(message);
+      this.$swal(message).then((result) => {
+        if (result.isConfirmed) {
+          this.$router.go(-1);
+        }
+      });
     } finally {
       this.loading = false;
     }

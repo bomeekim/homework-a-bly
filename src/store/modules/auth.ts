@@ -21,6 +21,10 @@ class Auth extends VuexModule {
     return this.issueToken;
   }
 
+  get storedConfirmToken() {
+    return this.confirmToken;
+  }
+
   @Mutation
   public setAccessToken(newAccessToken: string): void {
     this.accessToken = newAccessToken;

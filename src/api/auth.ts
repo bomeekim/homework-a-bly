@@ -11,6 +11,13 @@ interface VALIDATE_REQUEST_BODY {
   issueToken: string, // 인증 코드 발급 요청 토큰
 }
 
+interface CHANGE_PASSWORD_REQUEST_BODY {
+  email: string, // 이메일
+  confirmToken: string, // 인증 코드 검증 토큰
+  newPassword: string, // 새로운 비밀번호
+  newPasswordConfirm: string, // 새로운 비밀번호 확인
+}
+
 const BASE_URL = 'https://ably-frontend-assignment-server.vercel.app';
 const AUTH_API = {
   LOGIN: (payload: LOGIN_REQUEST_BODY) => connection.post(
@@ -23,6 +30,11 @@ const AUTH_API = {
   ),
 
   VALIDATE_AUTH_CODE: (payload: VALIDATE_REQUEST_BODY) => connection.post(
+    `${BASE_URL}/api/reset-password`,
+    payload,
+  ),
+
+  CHANGE_PASSWORD: (payload: CHANGE_PASSWORD_REQUEST_BODY) => connection.patch(
     `${BASE_URL}/api/reset-password`,
     payload,
   ),

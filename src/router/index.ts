@@ -31,6 +31,10 @@ const routes: Array<RouteConfig> = [
         path: '/reset/auth/validate',
         component: () => import('@/views/reset/components/AuthValidate.vue'),
       },
+      {
+        path: '/reset/password',
+        component: () => import('@/views/reset/components/PasswordReset.vue'),
+      },
     ],
   },
 ];
