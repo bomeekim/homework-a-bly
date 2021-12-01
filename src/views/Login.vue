@@ -22,16 +22,26 @@
           />
         </v-card-title>
         <v-card-text>
-          <v-form class="mt-4">
+          <v-form
+            v-model="valid"
+            class="my-4"
+          >
             <v-text-field
+              v-model="email"
               label="아이디"
               outlined
               placeholder="이메일을 입력해주세요"
+              :rules="[inputRules.required, inputRules.email]"
             />
             <v-text-field
+              v-model="password"
               label="비밀번호"
               outlined
               placeholder="비밀번호를 입력해주세요"
+              :rules="[inputRules.required, inputRules.password]"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPassword ? 'text' : 'password'"
+              @click:append="showPassword = !showPassword"
             />
           </v-form>
           <v-btn
@@ -39,6 +49,7 @@
             block
             depressed
             color="primary"
+            :disabled="!valid"
           >
             로그인
           </v-btn>
@@ -60,9 +71,28 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import rules from '@/utils/rules';
+
+export interface RuleFunction {
+  (value: string): boolean | string;
+}
+
+export interface Rule {
+  [key: string]: RuleFunction,
+}
 
 @Component
 export default class Login extends Vue {
+  valid = false;
+
+  email = '';
+
+  password = '';
+
+  showPassword = false;
+
+  inputRules: Rule = rules;
+
   get isMobile(): boolean {
     return this.$vuetify.breakpoint.mobile;
   }
