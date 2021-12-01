@@ -11,6 +11,10 @@ const AUTH_API = {
     `${BASE_URL}/api/login`,
     payload,
   ),
+
+  REQUEST_AUTH_CODE: (email: string) => connection.get(
+    `${BASE_URL}/api/reset-password?email=${email}`,
+  ),
 };
 
 export default AUTH_API;

@@ -61,6 +61,7 @@
             color="primary"
             small
             text
+            @click="handlePasswordResetButtonClick"
           >
             다시 설정하기
           </v-btn>
@@ -111,6 +112,10 @@ export default class Login extends Vue {
     if (this.valid) {
       this.login();
     }
+  }
+
+  public handlePasswordResetButtonClick(): void {
+    this.$router.push('/reset');
   }
 
   public async login(): Promise<void> {

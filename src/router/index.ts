@@ -18,12 +18,16 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/views/Login.vue'),
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/reset',
+    name: 'Reset',
+    redirect: '/reset/auth/request',
+    component: () => import('@/views/reset/Main.vue'),
+    children: [
+      {
+        path: '/reset/auth/request',
+        component: () => import('@/views/reset/components/AuthRequest.vue'),
+      },
+    ],
   },
 ];
 

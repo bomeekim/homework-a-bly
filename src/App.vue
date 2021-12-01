@@ -50,7 +50,7 @@ import { Vue, Component } from 'vue-property-decorator';
 @Component
 export default class App extends Vue {
   get isLoggedIn(): boolean {
-    return this.$route.path.indexOf('login') === -1;
+    return !/login|reset/g.test(this.$route.path);
   }
 }
 </script>
