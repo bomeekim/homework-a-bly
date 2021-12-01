@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-app-bar
+      v-if="isLoggedIn"
       app
       color="primary"
       dark
@@ -44,13 +45,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { Vue, Component } from 'vue-property-decorator';
 
-export default Vue.extend({
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
-});
+@Component
+export default class App extends Vue {
+  get isLoggedIn(): boolean {
+    return this.$route.path.indexOf('login') === -1;
+  }
+}
 </script>

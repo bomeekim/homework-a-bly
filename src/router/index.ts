@@ -9,6 +9,15 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: Home,
+    beforeEnter(to, from, next) {
+      // TODO 토큰 유무에 따라 라우팅
+      next('/login');
+    },
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Login.vue'),
   },
   {
     path: '/about',
