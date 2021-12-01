@@ -1,16 +1,11 @@
 <template>
-  <hello-world />
+  <h1>회원정보 조회 페이지</h1>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import HelloWorld from '../components/HelloWorld.vue';
+import { Vue, Component } from 'vue-property-decorator';
 
-export default Vue.extend({
-  name: 'Home',
-
-  components: {
-    HelloWorld,
-  },
-});
+@Component
+export default class Home extends Vue {
+}
 </script>

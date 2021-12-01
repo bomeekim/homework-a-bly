@@ -50,6 +50,7 @@
             depressed
             color="primary"
             :disabled="!valid"
+            @click="handleLoginButtonClick"
           >
             로그인
           </v-btn>
@@ -71,7 +72,13 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { namespace } from 'vuex-class';
 import rules from '@/utils/rules';
+import AUTH_API from '@/api/auth';
+import { ABLY_ACCESS_TOKEN } from '@/constants';
+
+const Auth = namespace('Auth');
 
 export interface RuleFunction {
   (value: string): boolean | string;
@@ -83,18 +90,49 @@ export interface Rule {
 
 @Component
 export default class Login extends Vue {
-  valid = false;
+  private valid = false;
 
-  email = '';
+  private email = '';
 
-  password = '';
+  private password = '';
 
-  showPassword = false;
+  private showPassword = false;
 
-  inputRules: Rule = rules;
+  private inputRules: Rule = rules;
 
   get isMobile(): boolean {
     return this.$vuetify.breakpoint.mobile;
+  }
+
+  @Auth.Mutation
+  public setAccessToken!: (newAccessToken: string) => void;
+
+  public handleLoginButtonClick(): void {
+    if (this.valid) {
+      this.login();
+    }
+  }
+
+  public async login(): Promise<void> {
+    try {
+      const { status, data: { accessToken } } = await AUTH_API.LOGIN({
+        email: this.email,
+        password: this.password,
+      });
+
+      if (status === 200 && accessToken) {
+        // store, localStorage 저장
+        this.setAccessToken(accessToken);
+        localStorage.setItem(ABLY_ACCESS_TOKEN, accessToken);
+
+        // 라우터 이동
+        await this.$router.push('/');
+      }
+    } catch (e) {
+      console.error(e);
+      const { message } = e;
+      this.$swal(message);
+    }
   }
 }
 </script>

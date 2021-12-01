@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../views/Home.vue';
+import { ABLY_ACCESS_TOKEN } from '@/constants';
 
 Vue.use(VueRouter);
 
@@ -9,10 +10,7 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: Home,
-    beforeEnter(to, from, next) {
-      // TODO 토큰 유무에 따라 라우팅
-      next('/login');
-    },
+    meta: { requiresAuth: true },
   },
   {
     path: '/login',
@@ -33,6 +31,18 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = localStorage.getItem(ABLY_ACCESS_TOKEN);
+  // const requiredAuth = to.matched.some((record) => record.meta.requiresAuth);
+
+  if (to.path === '/') {
+    if (!isLoggedIn) next('/login');
+    else next();
+  } else {
+    next();
+  }
 });
 
 export default router;
