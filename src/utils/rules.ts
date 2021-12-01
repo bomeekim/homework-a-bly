@@ -8,6 +8,10 @@ const rules = {
     const pattern = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
     return pattern.test(value) || '영문자와 숫자, 특수문자 조합으로 8~16자리를 입력해주세요.';
   },
+  number: (value: string) => {
+    const pattern = /[^0-9]/g;
+    return !pattern.test(value) || '숫자입력만 가능합니다.';
+  },
 };
 
 export default rules;

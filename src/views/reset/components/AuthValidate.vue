@@ -7,26 +7,28 @@
         flat
       >
         <v-card-title>
-          STEP 1. 인증코드 발급
+          STEP 2. 인증 코드 확인
         </v-card-title>
         <v-card-subtitle>
-          인증코드를 발급받을 이메일을 입력해주세요.
+          거의 다 왔어요! 이메일로 받은 인증 코드를 입력해주세요.
         </v-card-subtitle>
         <v-card-text>
           <v-text-field
-            v-model="email"
-            label="이메일"
+            v-model="authCode"
+            label="인증 코드"
             outlined
-            placeholder="이메일을 입력해주세요"
-            :rules="[inputRules.required, inputRules.email]"
+            placeholder="인증 코드를 입력해주세요"
+            :rules="[inputRules.required, inputRules.number]"
           />
+          <!--TODO 타이머 구현-->
+          <h5>남은 시간 </h5>
           <v-btn
             height="50px"
             block
             depressed
             color="primary"
             :loading="loading"
-            :disabled="!email || loading"
+            :disabled="!authCode || loading"
             @click="handleNextButtonClick"
           >
             다음
@@ -54,47 +56,45 @@ export interface RuleFunction {
 
 @Component
 export default class AuthRequest extends Vue {
-  private email = '';
+  private authCode = '';
 
   private loading = false;
 
   private inputRules: Rule = rules;
 
-  @Auth.Mutation
-  public setEmail!: (newEmail: string) => void;
+  @Auth.Getter
+  private submittedEmail!: string;
+
+  @Auth.Getter
+  private storedIssueToken!: string;
 
   @Auth.Mutation
-  public setIssueToken!: (newIssueToken: string) => void;
-
-  @Auth.Mutation
-  public setRemainMillisecond!: (newRemainMillisecond: string) => void;
+  public setConfirmToken!: (newConfirmToken: string) => void;
 
   public handleNextButtonClick(): void {
-    if (this.email) {
-      // store 에 이메일 저장
-      this.setEmail(this.email);
-
+    if (this.authCode) {
       // 버튼 로더 노출
       this.loading = true;
 
-      // 인증코드 발급 요청
-      this.requestAuthCode();
+      // 인증코드 검증 요청
+      this.validateAuthCode();
     }
   }
 
-  public async requestAuthCode(): Promise<void> {
+  public async validateAuthCode(): Promise<void> {
     try {
       const {
-        status,
-        data: { issueToken, remainMillisecond },
-      } = await AUTH_API.REQUEST_AUTH_CODE(this.email);
+        status, data: { confirmToken },
+      } = await AUTH_API.VALIDATE_AUTH_CODE({
+        email: this.submittedEmail,
+        authCode: this.authCode,
+        issueToken: this.storedIssueToken,
+      });
 
-      if (status === 200 && issueToken && remainMillisecond) {
-        this.setIssueToken(issueToken);
-        this.setRemainMillisecond(remainMillisecond);
+      if (status === 200 && confirmToken) {
+        this.setConfirmToken(confirmToken);
 
-        // 라우터 이동
-        await this.$router.push('/reset/auth/validate');
+        // TODO 비밀번호 변경 페이지 이동
       }
     } catch (e) {
       console.error(e);
