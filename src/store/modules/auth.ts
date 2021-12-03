@@ -2,7 +2,7 @@
 import {
   VuexModule, Module, Action, Mutation,
 } from 'vuex-module-decorators';
-import { USER_INFO } from '@/interfaces/userInfo';
+import { IUserInfo } from '@/interfaces/userInfo';
 
 @Module({ namespaced: true })
 class Auth extends VuexModule {
@@ -16,7 +16,7 @@ class Auth extends VuexModule {
 
   public confirmToken = ''; // 인증 코드 검증 토큰
 
-  public userInfo: USER_INFO = {
+  public userInfo: IUserInfo = {
     name: '',
     email: '',
     profileImage: '',
@@ -35,7 +35,7 @@ class Auth extends VuexModule {
     return this.confirmToken;
   }
 
-  get storedUserInfo(): USER_INFO {
+  get storedUserInfo(): IUserInfo {
     return this.userInfo;
   }
 
@@ -80,7 +80,7 @@ class Auth extends VuexModule {
   }
 
   @Mutation
-  public setUserInfo(newUserInfo: USER_INFO): void {
+  public setUserInfo(newUserInfo: IUserInfo): void {
     this.userInfo = newUserInfo;
   }
 }

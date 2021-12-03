@@ -64,10 +64,10 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import Avatar from '@/components/Avatar.vue';
-import { USER_INFO } from '@/interfaces/userInfo';
+import { IUserInfo } from '@/interfaces/userInfo';
 import { getConvertedTimestamp } from '@/utils/date';
 
-export interface BUTTON_OBJECT {
+export interface IButton {
   name: string,
   value: string | number,
   icon: string,
@@ -80,9 +80,9 @@ export interface BUTTON_OBJECT {
 })
 export default class Profile extends Vue {
   @Prop({ required: false })
-  public userInfo!: USER_INFO;
+  public userInfo!: IUserInfo;
 
-  private buttonList: BUTTON_OBJECT[] = [
+  private buttonList: IButton[] = [
     { name: '회원등급', value: 'VVIP', icon: 'mdi-crown-outline' },
     { name: '쿠폰', value: 3, icon: 'mdi-ticket-percent' },
     { name: '포인트', value: 15300, icon: 'mdi-alpha-p-box-outline' },

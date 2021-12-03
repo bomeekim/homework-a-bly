@@ -43,15 +43,10 @@ import { Vue, Component } from 'vue-property-decorator';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { namespace } from 'vuex-class';
 import rules from '@/utils/rules';
-import { Rule } from '@/views/Login.vue';
 import AUTH_API from '@/api/auth';
+import { IRule } from '@/interfaces/rule';
 
 const Auth = namespace('Auth');
-
-// TODO 모듈화
-export interface RuleFunction {
-  (value: string): boolean | string;
-}
 
 @Component
 export default class AuthRequest extends Vue {
@@ -59,7 +54,7 @@ export default class AuthRequest extends Vue {
 
   private loading = false;
 
-  private inputRules: Rule = rules;
+  private inputRules: IRule = rules;
 
   @Auth.Mutation
   public setEmail!: (newEmail: string) => void;

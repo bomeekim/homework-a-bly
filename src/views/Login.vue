@@ -79,17 +79,10 @@ import rules from '@/utils/rules';
 import { setAxiosHeaderAuthToken } from '@/utils/auth';
 import AUTH_API from '@/api/auth';
 import { ABLY_ACCESS_TOKEN } from '@/constants';
+import { IRule } from '@/interfaces/rule';
 
 const Common = namespace('Common');
 const Auth = namespace('Auth');
-
-export interface RuleFunction {
-  (value: string): boolean | string;
-}
-
-export interface Rule {
-  [key: string]: RuleFunction,
-}
 
 @Component
 export default class Login extends Vue {
@@ -101,7 +94,7 @@ export default class Login extends Vue {
 
   private showPassword = false;
 
-  private inputRules: Rule = rules;
+  private inputRules: IRule = rules;
 
   @Common.Getter
   public storedIsMobile!: boolean;

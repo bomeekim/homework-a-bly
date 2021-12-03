@@ -59,7 +59,7 @@ import { namespace } from 'vuex-class';
 import AvatarMenu from '@/components/AvatarMenu.vue';
 import Profile from '@/views/Profile.vue';
 import AUTH_API from '@/api/auth';
-import { USER_INFO } from '@/interfaces/userInfo';
+import { IUserInfo } from '@/interfaces/userInfo';
 
 const Common = namespace('Common');
 const Auth = namespace('Auth');
@@ -92,10 +92,10 @@ export default class Home extends Vue {
   public storedIsMobile!: boolean;
 
   @Auth.Getter
-  public storedUserInfo!: USER_INFO;
+  public storedUserInfo!: IUserInfo;
 
   @Auth.Mutation
-  public setUserInfo!: (newUserInfo: USER_INFO) => void;
+  public setUserInfo!: (newUserInfo: IUserInfo) => void;
 
   public async getUserInfo(): Promise<void> {
     try {

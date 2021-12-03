@@ -1,4 +1,4 @@
-export interface USER_INFO {
+export interface IUserInfo {
   name: string, // 이름
   email: string, // 이메일
   profileImage: string, // 프로필 사진 URL
