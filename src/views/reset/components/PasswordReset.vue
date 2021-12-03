@@ -4,9 +4,10 @@
       <v-card
         class="pa-4"
         max-width="500"
+        width="400"
         flat
       >
-        <v-card-title>
+        <v-card-title class="font-weight-bold">
           STEP 3. 비밀번호 변경
         </v-card-title>
         <v-card-subtitle>

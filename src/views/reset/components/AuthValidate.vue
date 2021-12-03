@@ -4,13 +4,15 @@
       <v-card
         class="pa-4"
         max-width="500"
+        width="400"
         flat
       >
-        <v-card-title>
+        <v-card-title class="font-weight-bold">
           STEP 2. 인증 코드 확인
         </v-card-title>
         <v-card-subtitle>
-          거의 다 왔어요! 이메일로 받은 인증 코드를 입력해주세요.
+          <p class="mt-3 mb-0">거의 다 왔어요! 😉</p>
+          <p class="mb-0">이메일로 받은 인증 코드를 입력해주세요.</p>
         </v-card-subtitle>
         <v-card-text>
           <v-text-field
