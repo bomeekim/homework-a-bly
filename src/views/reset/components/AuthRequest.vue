@@ -14,20 +14,22 @@
           인증코드를 발급받을 이메일을 입력해주세요.
         </v-card-subtitle>
         <v-card-text>
-          <v-text-field
-            v-model="email"
-            label="이메일"
-            outlined
-            placeholder="이메일을 입력해주세요"
-            :rules="[inputRules.required, inputRules.email]"
-          />
+          <v-form v-model="valid">
+            <v-text-field
+              v-model="email"
+              label="이메일"
+              outlined
+              placeholder="이메일을 입력해주세요"
+              :rules="[inputRules.required, inputRules.email]"
+            />
+          </v-form>
           <v-btn
             height="50px"
             block
             depressed
             color="primary"
             :loading="loading"
-            :disabled="!email || loading"
+            :disabled="!valid"
             @click="handleNextButtonClick"
           >
             다음
@@ -55,6 +57,8 @@ export default class AuthRequest extends Vue {
   private loading = false;
 
   private inputRules: IRule = rules;
+
+  private valid = false;
 
   @Auth.Mutation
   public setEmail!: (newEmail: string) => void;
@@ -95,7 +99,7 @@ export default class AuthRequest extends Vue {
     } catch (e) {
       console.error(e);
       const { message } = e;
-      this.$swal(message);
+      this.$showAlertModal(message);
     } finally {
       this.loading = false;
     }

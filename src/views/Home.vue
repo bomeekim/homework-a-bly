@@ -111,7 +111,7 @@ export default class Home extends Vue {
       }
     } catch (e) {
       const { message } = e;
-      this.$swal(message).then((result) => {
+      this.$showAlertModal(message).then((result) => {
         if (result.isConfirmed) {
           this.$router.push('/login');
         }

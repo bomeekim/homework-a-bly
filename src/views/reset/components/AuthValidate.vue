@@ -15,14 +15,16 @@
           <p class="mb-0">이메일로 받은 인증 코드를 입력해주세요.</p>
         </v-card-subtitle>
         <v-card-text>
-          <v-text-field
-            v-model="authCode"
-            label="인증 코드"
-            outlined
-            placeholder="인증 코드를 입력해주세요"
-            hide-details
-            :rules="[inputRules.required, inputRules.number]"
-          />
+          <v-form v-model="valid">
+            <v-text-field
+              v-model="authCode"
+              label="인증 코드"
+              outlined
+              placeholder="인증 코드를 입력해주세요"
+              hide-details
+              :rules="[inputRules.required, inputRules.number]"
+            />
+          </v-form>
           <v-row class="mx-3 mt-3 mb-7 justify-space-between">
             <p class="mb-0 text-caption font-weight-bold">남은 시간</p>
             <p
@@ -38,7 +40,7 @@
             depressed
             color="primary"
             :loading="loading"
-            :disabled="!authCode || loading"
+            :disabled="!valid"
             @click="handleNextButtonClick"
           >
             다음
@@ -67,6 +69,8 @@ export default class AuthValidate extends Vue {
   private loading = false;
 
   private inputRules: IRule = rules;
+
+  private valid = false;
 
   private remainTime = 0;
 
@@ -109,7 +113,7 @@ export default class AuthValidate extends Vue {
         this.remainTime = 0;
         clearInterval(this.timer);
 
-        this.$swal('시간이 초과되었습니다. 인증 코드를 다시 발급받아 주세요.').then((result) => {
+        this.$showAlertModal('시간이 초과되었습니다. </br>인증 코드를 다시 발급받아 주세요.').then((result) => {
           if (result.isConfirmed) {
             this.$router.go(-1);
           }
@@ -150,7 +154,7 @@ export default class AuthValidate extends Vue {
     } catch (e) {
       console.error(e);
       const { message } = e;
-      this.$swal(message).then((result) => {
+      this.$showAlertModal(message).then((result) => {
         if (result.isConfirmed) {
           this.$router.go(-1);
         }

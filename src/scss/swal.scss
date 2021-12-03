@@ -1,0 +1,19 @@
+body.swal2-shown > [aria-hidden="true"] {
+  transition: 0.1s filter;
+  filter: blur(10px);
+}
+
+.swal2-popup {
+  border-radius: 1rem !important;
+}
+
+.swal-custom-alert-html {
+  margin: 4.2em 1.6em 2.3em !important;
+}
+
+.swal-custom-alert-confirm-button {
+  height: 48px;
+  width: 300px;
+  background-color: #ec5e65 !important;
+  font-weight: bold !important;
+}

@@ -66,7 +66,7 @@ export default class AvatarMenu extends Vue {
     } catch (e) {
       console.error(e);
       const { message } = e;
-      this.$swal(message);
+      this.$showAlertModal(message);
     }
   }
 }

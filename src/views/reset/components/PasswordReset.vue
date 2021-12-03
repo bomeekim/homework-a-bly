@@ -45,7 +45,7 @@
             depressed
             color="primary"
             :loading="loading"
-            :disabled="password !== passwordConfirm || loading"
+            :disabled="password !== passwordConfirm || !valid"
             @click="handleChangeButtonClick"
           >
             변경하기
@@ -108,7 +108,7 @@ export default class PasswordReset extends Vue {
       });
 
       if (status === 200) {
-        this.$swal('비밀번호가 변경되었습니다. 다시 로그인해주세요.')
+        this.$showAlertModal('비밀번호가 변경되었습니다. </br>다시 로그인해주세요.')
           .then((result) => {
             if (result.isConfirmed) {
               // 확인버튼 클릭 시 로그인 화면으로 이동
@@ -119,7 +119,7 @@ export default class PasswordReset extends Vue {
     } catch (e) {
       console.error(e);
       const { message } = e;
-      this.$swal(message);
+      this.$showAlertModal(message);
     } finally {
       this.loading = false;
     }
