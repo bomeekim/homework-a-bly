@@ -1,5 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { VuexModule, Module, Mutation } from 'vuex-module-decorators';
+import {
+  VuexModule, Module, Action, Mutation,
+} from 'vuex-module-decorators';
 import { USER_INFO } from '@/interfaces/userInfo';
 
 @Module({ namespaced: true })
@@ -35,6 +37,21 @@ class Auth extends VuexModule {
 
   get storedUserInfo(): USER_INFO {
     return this.userInfo;
+  }
+
+  @Action
+  public clearAuthStore(lastConnectedAt?: number): void {
+    this.context.commit('setAccessToken', '');
+    this.context.commit('setEmail', '');
+    this.context.commit('setIssueToken', '');
+    this.context.commit('setRemainMillisecond', '');
+    this.context.commit('setConfirmToken', '');
+    this.context.commit('setUserInfo', {
+      name: '',
+      email: '',
+      profileImage: '',
+      lastConnectedAt: lastConnectedAt || new Date().getTime(),
+    });
   }
 
   @Mutation

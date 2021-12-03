@@ -76,6 +76,7 @@ import { Vue, Component } from 'vue-property-decorator';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { namespace } from 'vuex-class';
 import rules from '@/utils/rules';
+import { setAxiosHeaderAuthToken } from '@/utils/auth';
 import AUTH_API from '@/api/auth';
 import { ABLY_ACCESS_TOKEN } from '@/constants';
 
@@ -130,8 +131,13 @@ export default class Login extends Vue {
         this.setAccessToken(accessToken);
         localStorage.setItem(ABLY_ACCESS_TOKEN, accessToken);
 
-        // 라우터 이동
-        await this.$router.push('/');
+        // axios header 셋팅
+        setAxiosHeaderAuthToken(accessToken);
+
+        setTimeout(async () => {
+          // 라우터 이동
+          await this.$router.push('/');
+        }, 500);
       }
     } catch (e) {
       console.error(e);

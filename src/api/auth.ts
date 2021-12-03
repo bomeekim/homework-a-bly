@@ -25,6 +25,8 @@ const AUTH_API = {
     payload,
   ),
 
+  LOGOUT: () => connection.post(`${BASE_URL}/logout`),
+
   USER_INFO: () => connection.get(`${BASE_URL}/user`),
 
   REQUEST_AUTH_CODE: (email: string) => connection.get(

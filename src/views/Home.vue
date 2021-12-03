@@ -6,7 +6,7 @@
       flat
     >
       <!--모바일인 경우-->
-      <avartar
+      <avatar-menu
         v-if="$vuetify.breakpoint.smAndDown"
         :name="storedUserInfo.name"
         :profile-image="storedUserInfo.profileImage"
@@ -33,11 +33,10 @@
         </v-tab>
       </v-tabs>
 
-      <avartar
+      <avatar-menu
         class="hidden-sm-and-down"
         :name="storedUserInfo.name"
-        :profile-image="storedUserInfo.profileImage"
-      />
+        :profile-image="storedUserInfo.profileImage" />
     </v-app-bar>
 
     <v-main class="grey lighten-3 pt-4">
@@ -62,16 +61,17 @@
 import { Vue, Component } from 'vue-property-decorator';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { namespace } from 'vuex-class';
-import Avartar from '@/components/Avatar.vue';
+import AvatarMenu from '@/components/AvatarMenu.vue';
 import Profile from '@/views/Profile.vue';
 import AUTH_API from '@/api/auth';
 import { USER_INFO } from '@/interfaces/userInfo';
 
+const Common = namespace('Common');
 const Auth = namespace('Auth');
 
 @Component({
   components: {
-    Avartar,
+    AvatarMenu,
     Profile,
   },
 })
