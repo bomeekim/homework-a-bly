@@ -5,15 +5,9 @@
       color="white"
       flat
     >
-      <!--모바일인 경우-->
-      <avatar-menu
-        v-if="$vuetify.breakpoint.smAndDown"
-        :name="storedUserInfo.name"
-        :profile-image="storedUserInfo.profileImage"
-      />
       <!--모바일이 아닌 경우 상단 왼쪽에 로고를 표시한다.-->
       <v-img
-        v-else
+        v-if="!storedIsMobile"
         src="../assets/images/image-logo.jpg"
         width="120px"
         alt="logo"
@@ -21,9 +15,10 @@
 
       <v-tabs
         v-model="currentTab"
-        centered
         class="ml-n9"
+        :class="{ 'px-10': !storedIsMobile, 'pr-10': storedIsMobile }"
         color="grey darken-1"
+        centered
       >
         <v-tab
           v-for="link in links"
@@ -92,6 +87,9 @@ export default class Home extends Vue {
   mounted() {
     this.getUserInfo();
   }
+
+  @Common.Getter
+  public storedIsMobile!: boolean;
 
   @Auth.Getter
   public storedUserInfo!: USER_INFO;

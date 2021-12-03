@@ -3,14 +3,14 @@
     <v-row
       class="align-center"
       :class="{
-        'justify-center': isMobile,
-        'justify-start pl-50': !isMobile
+        'justify-center': storedIsMobile,
+        'justify-start pl-50': !storedIsMobile
       }"
     >
       <v-card
         class="pa-4"
         max-width="500"
-        :width="isMobile ? 300 : 360"
+        :width="storedIsMobile ? 300 : 360"
         flat
         color="white"
         rounded="xl"
@@ -80,6 +80,7 @@ import { setAxiosHeaderAuthToken } from '@/utils/auth';
 import AUTH_API from '@/api/auth';
 import { ABLY_ACCESS_TOKEN } from '@/constants';
 
+const Common = namespace('Common');
 const Auth = namespace('Auth');
 
 export interface RuleFunction {
@@ -102,9 +103,8 @@ export default class Login extends Vue {
 
   private inputRules: Rule = rules;
 
-  get isMobile(): boolean {
-    return this.$vuetify.breakpoint.mobile;
-  }
+  @Common.Getter
+  public storedIsMobile!: boolean;
 
   @Auth.Mutation
   public setAccessToken!: (newAccessToken: string) => void;
