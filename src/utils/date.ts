@@ -2,7 +2,7 @@
  * 한 자리 수를 두 자리 수로 리턴해주는 함수
  * @param number 변경할 숫자
  */
-function convertedSingleDigitWithZero(number: number) {
+export function convertedSingleDigitWithZero(number: number) {
   return number >= 10 ? number : `0${number}`;
 }
 

@@ -31,6 +31,10 @@ class Auth extends VuexModule {
     return this.issueToken;
   }
 
+  get storedRemainMillisecond() {
+    return this.remainMillisecond;
+  }
+
   get storedConfirmToken() {
     return this.confirmToken;
   }
