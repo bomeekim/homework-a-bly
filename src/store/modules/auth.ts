@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { VuexModule, Module, Mutation } from 'vuex-module-decorators';
+import { USER_INFO } from '@/interfaces/userInfo';
 
 @Module({ namespaced: true })
 class Auth extends VuexModule {
@@ -13,6 +14,13 @@ class Auth extends VuexModule {
 
   public confirmToken = ''; // 인증 코드 검증 토큰
 
+  public userInfo: USER_INFO = {
+    name: '',
+    email: '',
+    profileImage: '',
+    lastConnectedAt: new Date().getTime(),
+  }; // 유저 정보
+
   get submittedEmail() {
     return this.email;
   }
@@ -23,6 +31,10 @@ class Auth extends VuexModule {
 
   get storedConfirmToken() {
     return this.confirmToken;
+  }
+
+  get storedUserInfo(): USER_INFO {
+    return this.userInfo;
   }
 
   @Mutation
@@ -48,6 +60,11 @@ class Auth extends VuexModule {
   @Mutation
   public setConfirmToken(newConfirmToken: string): void {
     this.confirmToken = newConfirmToken;
+  }
+
+  @Mutation
+  public setUserInfo(newUserInfo: USER_INFO): void {
+    this.userInfo = newUserInfo;
   }
 }
 

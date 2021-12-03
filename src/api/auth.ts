@@ -18,24 +18,26 @@ interface CHANGE_PASSWORD_REQUEST_BODY {
   newPasswordConfirm: string, // 새로운 비밀번호 확인
 }
 
-const BASE_URL = 'https://ably-frontend-assignment-server.vercel.app';
+const BASE_URL = 'https://ably-frontend-assignment-server.vercel.app/api';
 const AUTH_API = {
   LOGIN: (payload: LOGIN_REQUEST_BODY) => connection.post(
-    `${BASE_URL}/api/login`,
+    `${BASE_URL}/login`,
     payload,
   ),
 
+  USER_INFO: () => connection.get(`${BASE_URL}/user`),
+
   REQUEST_AUTH_CODE: (email: string) => connection.get(
-    `${BASE_URL}/api/reset-password?email=${email}`,
+    `${BASE_URL}/reset-password?email=${email}`,
   ),
 
   VALIDATE_AUTH_CODE: (payload: VALIDATE_REQUEST_BODY) => connection.post(
-    `${BASE_URL}/api/reset-password`,
+    `${BASE_URL}/reset-password`,
     payload,
   ),
 
   CHANGE_PASSWORD: (payload: CHANGE_PASSWORD_REQUEST_BODY) => connection.patch(
-    `${BASE_URL}/api/reset-password`,
+    `${BASE_URL}/reset-password`,
     payload,
   ),
 };

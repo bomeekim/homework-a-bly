@@ -1,10 +1,15 @@
 import axios from 'axios';
+import { ABLY_ACCESS_TOKEN } from '@/constants';
 
 const connection = axios.create();
 connection.defaults.headers.common['Content-Type'] = 'application/json';
 connection.defaults.responseType = 'json';
 
-// TODO 인가가 필요한 요청인 경우 Header 에 Authorization 추가
+const token = localStorage.getItem(ABLY_ACCESS_TOKEN);
+
+if (token) {
+  connection.defaults.headers.common.Authorization = `Bearer ${token}`;
+}
 
 connection.interceptors.response.use(
   (response) => {
